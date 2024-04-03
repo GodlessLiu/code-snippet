@@ -1,0 +1,23 @@
+[package]
+name = "code-snippet"
+version = "0.0.0"
+description = "code-snippet"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1", features = [] }
+
+[dependencies]
+tauri = { version = "1", features = [ "system-tray", "window-set-position", "path-all", "clipboard-all", "fs-exists", "fs-read-file", "fs-read-dir", "window-set-focus", "global-shortcut-all", "window-hide", "window-start-dragging", "window-close", "window-show", "shell-open"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-fs-watch = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+tauri-plugin-autostart = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
+winapi = { version = "0.3", features = ["winuser", "winnt", "minwindef", "windef"] }
+
+[features]
+# This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
