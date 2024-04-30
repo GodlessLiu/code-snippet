@@ -27,6 +27,7 @@ export function Command_view() {
     const command_view_file = use_code_snippets_store((state) => state.command_view_file);
     const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
     useEffect(() => {
+        console.log(command_view_file);
         set_group(command_view_file);
     }, [])
 
@@ -89,7 +90,7 @@ export function Command_view() {
                                                 }
                                             </CommandGroup>
                                             < CommandSeparator />
-                                        </> : <CommandItem className='ml-1' onSelect={() => handleSelect(item.content!)}>
+                                        </> : <CommandItem className='ml-1' onSelect={() => handleSelect(item.content!)} key={item.name!}>
                                             <span className='inline-block h-[9px] w-[9px] rotate-45 mr-2 bg-red-600'></span> <span>{item.name}</span>
                                             <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>{item.label}</span>
                                         </CommandItem>
@@ -104,3 +105,6 @@ export function Command_view() {
         </Command>
     )
 }
+
+
+

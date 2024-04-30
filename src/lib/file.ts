@@ -1,5 +1,5 @@
 import { FileEntry, readTextFile } from "@tauri-apps/api/fs";
-import yaml from 'js-yaml';
+import jsYaml from 'js-yaml';
 
 export interface Command_view_file {
     is_dir: boolean,
@@ -8,7 +8,6 @@ export interface Command_view_file {
     children?: Command_view_file[],
     content?: string
 }
-
 interface MetaInfo {
     label: string
 }
@@ -24,11 +23,13 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<C
                 children: await generate_commad_view_file(entry.children)
             })
         } else {
-            const _ = await readTextFile(entry.path);
-            const [meta, content] = yaml.loadAll(_) as [MetaInfo, string];
+            const _content = await readTextFile(entry.path);
+            const content = _content.replace(/(---[\s\n\t]*.*[\s\n\t]*---[\s\n\t]*)/, '');
+            console.log(content);
+            const [meta, _] = jsYaml.loadAll(_content) as [MetaInfo, string];
             command_view_file.push({
                 is_dir: false,
-                name: entry.name!,
+                name: entry.name!.slice(0, -3),
                 label: meta.label,
                 content: content
             })
@@ -36,3 +37,11 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<C
     }
     return command_view_file;
 }
+
+
+
+
+
+
+
+
