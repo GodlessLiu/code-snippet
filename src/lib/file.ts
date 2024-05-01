@@ -25,7 +25,6 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<C
         } else {
             const _content = await readTextFile(entry.path);
             const content = _content.replace(/(---[\s\n\t]*.*[\s\n\t]*---[\s\n\t]*)/, '');
-            console.log(content);
             const [meta, _] = jsYaml.loadAll(_content) as [MetaInfo, string];
             command_view_file.push({
                 is_dir: false,
@@ -37,7 +36,6 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<C
     }
     return command_view_file;
 }
-
 
 
 

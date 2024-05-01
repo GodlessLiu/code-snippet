@@ -27,7 +27,6 @@ export function Command_view() {
     const command_view_file = use_code_snippets_store((state) => state.command_view_file);
     const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
     useEffect(() => {
-        console.log(command_view_file);
         set_group(command_view_file);
     }, [])
 
