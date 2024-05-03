@@ -1,5 +1,5 @@
 import { BaseDirectory, FileEntry, createDir, exists, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
-import jsYaml from 'js-yaml';
+import { default as matter } from 'gray-matter';
 
 export interface Command_view_file {
     is_dir: boolean,
@@ -13,8 +13,6 @@ interface MetaInfo {
     label: string
     is_private?: boolean
 }
-
-
 interface Generate_commad_view_file_return {
     command_view_file: Command_view_file[],
     copy_view_file: Command_view_file[]
@@ -41,8 +39,7 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<G
             })
         } else {
             const _content = await readTextFile(entry.path);
-            const content = _content.replace(/(---[\s\n\t]*.*[\s\n\t]*---[\s\n\t]*)/, '');
-            const [meta, _] = jsYaml.loadAll(_content) as [MetaInfo, string];
+            const { content, data: meta } = matter(_content)
             const data = {
                 is_dir: false,
                 name: entry.name!.slice(0, -3),
@@ -97,4 +94,3 @@ export function write_snippet_file(sub_path: string, content: string): Promise<v
         })
     })
 }
-
