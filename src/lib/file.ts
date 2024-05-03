@@ -1,4 +1,4 @@
-import { FileEntry, readTextFile } from "@tauri-apps/api/fs";
+import { BaseDirectory, FileEntry, createDir, exists, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import jsYaml from 'js-yaml';
 
 export interface Command_view_file {
@@ -65,8 +65,36 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<G
 }
 
 
+export const prefix = "snippets\\"
+
+export function snippet_exist(sub_path: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+        exists(prefix + sub_path, { dir: BaseDirectory.AppData }).then((exist) => {
+            resolve(exist)
+        }).catch(e => {
+            reject(e)
+        })
+    })
+}
 
 
+export function create_snippet_dir(sub_path: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        createDir(prefix + sub_path, { dir: BaseDirectory.AppData }).then(() => {
+            resolve()
+        }).catch(e => {
+            reject(e)
+        })
+    })
+}
 
-
+export function write_snippet_file(sub_path: string, content: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        writeTextFile(prefix + sub_path, content, { dir: BaseDirectory.AppData }).then(() => {
+            resolve()
+        }).catch(e => {
+            reject(e)
+        })
+    })
+}
 

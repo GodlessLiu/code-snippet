@@ -1,14 +1,9 @@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
-import { Command_view_file } from "@/lib/file"
-import { BaseDirectory, createDir, exists, writeTextFile } from "@tauri-apps/api/fs"
-
-const prefix = "snippets\\"
-
+import { Command_view_file, create_snippet_dir, snippet_exist, write_snippet_file } from "@/lib/file"
 export function Share() {
     const [value, setValue] = useState<string>("")
-
     const [process, setProcess] = useState<number>(0)
     function download(value: string) {
         if (!value) return
@@ -18,23 +13,23 @@ export function Share() {
         const length = _value.length
         _value.forEach(async (element: Command_view_file) => {
             if (element.is_dir) {
-                if (!await exists(prefix + element.name, { dir: BaseDirectory.AppData })) {
-                    await createDir(prefix + element.name, { dir: BaseDirectory.AppData })
+                if (!await snippet_exist(element.name)) {
+                    await create_snippet_dir(element.name)
                 }
                 element.children?.forEach(async (child: Command_view_file) => {
-                    if (await exists(prefix + element.name + '\\' + child.name + '.md', { dir: BaseDirectory.AppData })) return
-                    await writeTextFile(prefix + element.name + '\\' + child.name + '.md', child.rawContent!, { dir: BaseDirectory.AppData })
+                    if (await snippet_exist(element.name + '\\' + child.name + '.md')) return
+                    await write_snippet_file(element.name + '\\' + child.name + '.md', child.rawContent!)
                 })
                 cur++;
                 setProcess(cur / length * 500)
                 return
             }
-            if (await exists(prefix + element.name, { dir: BaseDirectory.AppData })) {
+            if (await snippet_exist(element.name)) {
                 cur++;
                 setProcess(cur / length * 500)
                 return
             }
-            await writeTextFile(prefix + element.name, element.rawContent!, { dir: BaseDirectory.AppData })
+            await write_snippet_file(element.name, element.rawContent!)
             cur++;
             setProcess(cur / length * 500)
             return
@@ -47,3 +42,5 @@ export function Share() {
         <Button variant="outline" size='sm' onClick={() => download(value)}>导入</Button>
     </div>
 }
+
+
