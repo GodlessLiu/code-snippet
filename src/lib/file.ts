@@ -9,10 +9,7 @@ export interface Command_view_file {
     content?: string,
     rawContent?: string
 }
-interface MetaInfo {
-    label: string
-    is_private?: boolean
-}
+
 interface Generate_commad_view_file_return {
     command_view_file: Command_view_file[],
     copy_view_file: Command_view_file[]
