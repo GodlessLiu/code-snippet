@@ -1,31 +1,20 @@
-import { listen } from '@tauri-apps/api/event';
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-} from "@/components/ui/command";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { MFileEntry, useFile } from "@/lib/file";
-import { appWindow } from '@tauri-apps/api/window';
-import { watch } from "tauri-plugin-fs-watch-api";
-import { appDataDir } from '@tauri-apps/api/path';
-import { use_state_windows } from '@/hooks/use_state_window';
-import { invoke } from '@tauri-apps/api';
-import { writeText } from '@tauri-apps/api/clipboard';
+import Options from "@/components/Options";
+import { use_state_windows } from "@/hooks/use_state_window";
+import { Command_view_file, generate_commad_view_file } from "@/lib/file";
+import { use_code_snippets_store } from "@/stores/code_snippets";
+import { listen } from "@tauri-apps/api/event";
+import { appWindow } from "@tauri-apps/api/window";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
+import { useRef, useCallback, useEffect, useState } from "react";
+import { BaseDirectory, appDataDir } from "@tauri-apps/api/path";
+import { readDir } from "@tauri-apps/api/fs";
+import { watch } from 'tauri-plugin-fs-watch-api';
+import { invoke } from "@tauri-apps/api";
+import { writeText } from "@tauri-apps/api/clipboard";
 
 export function Command_view() {
     const searh_input_ref = useRef<HTMLInputElement>(null);
-    const { read_data_dir, read_file } = useFile();
-    const [group, set_group] = useState<MFileEntry[]>([]);
-    const generate_group = useCallback(() => {
-        read_data_dir().then((data) => {
-            set_group(data);
-        })
-    }, [])
+    const [group, set_group] = useState<Command_view_file[]>([]);
     // 保存窗口x，y位置
     use_state_windows();
     const [query, set_query] = useState<string>('');
@@ -34,6 +23,13 @@ export function Command_view() {
             searh_input_ref.current.focus();
         }
     }, [])
+
+    const command_view_file = use_code_snippets_store((state) => state.command_view_file);
+    const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
+    useEffect(() => {
+        set_group(command_view_file);
+    }, [])
+
     useEffect(() => {
         search_input_focus();
         appWindow.setFocus();
@@ -42,20 +38,22 @@ export function Command_view() {
         })
     }, [])
     useEffect(() => {
-        generate_group();
         appDataDir().then((dir) => {
             watch(
                 dir + '/snippets',
                 (_: any) => {
-                    generate_group();
+                    readDir('snippets', { dir: BaseDirectory.AppData, recursive: true }).then(async (entries) => {
+                        const { command_view_file, copy_view_file } = await generate_commad_view_file(entries);
+                        set_file_entries(entries, command_view_file, copy_view_file);
+                        set_group(command_view_file);
+                    });
                 },
                 { recursive: true },
             );
         })
     }, [])
-    async function handleSelect(path: string) {
-        const data = await read_file(path);
-        await writeText(data);
+    async function handleSelect(content: string) {
+        await writeText(content);
         appWindow.hide();
         setTimeout(() => {
             invoke("ctrl_v");
@@ -66,9 +64,10 @@ export function Command_view() {
         set_query('');
     }
     return (
-        <Command className="rounded-lg border shadow-md w-full h-[384px] overflow-auto">
+        <Command>
+            <Options />
             <CommandInput placeholder="Type a snippet name to search..." ref={searh_input_ref} value={query} onValueChange={set_query} />
-            <CommandList className='list outline-none'>
+            <CommandList className='list outline-none' key='list'>
                 <CommandEmpty>No results found.</CommandEmpty>
                 {
                     group.length > 0 && group.map((item) => {
@@ -81,7 +80,7 @@ export function Command_view() {
                                                 {
                                                     item.children && item.children.length > 0 && item.children!.map((child) => {
                                                         return (
-                                                            <CommandItem onSelect={() => handleSelect(child.path)} key={child.path}>
+                                                            <CommandItem onSelect={() => handleSelect(child.content!)} key={child.name}>
                                                                 <span className='inline-block h-[9px] w-[9px] rotate-45 mr-2 bg-red-600'></span> <span>{child.name}</span>
                                                                 <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>{child.label}</span>
                                                             </CommandItem>
@@ -90,7 +89,7 @@ export function Command_view() {
                                                 }
                                             </CommandGroup>
                                             < CommandSeparator />
-                                        </> : <CommandItem onSelect={() => handleSelect(item.path)} key={item.path} className=' ml-1'>
+                                        </> : <CommandItem className='ml-1' onSelect={() => handleSelect(item.content!)} key={item.name!}>
                                             <span className='inline-block h-[9px] w-[9px] rotate-45 mr-2 bg-red-600'></span> <span>{item.name}</span>
                                             <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>{item.label}</span>
                                         </CommandItem>
@@ -105,3 +104,6 @@ export function Command_view() {
         </Command>
     )
 }
+
+
+

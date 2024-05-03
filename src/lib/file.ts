@@ -1,50 +1,72 @@
-import { readDir, BaseDirectory, readTextFile, FileEntry } from "@tauri-apps/api/fs";
+import { FileEntry, readTextFile } from "@tauri-apps/api/fs";
+import jsYaml from 'js-yaml';
 
-export type MFileEntry = Pick<FileEntry, 'path' | 'name'> & { is_dir: boolean, label: string, children?: MFileEntry[] }
-
+export interface Command_view_file {
+    is_dir: boolean,
+    name: string,
+    label?: string,
+    children?: Command_view_file[],
+    content?: string,
+    rawContent?: string
+}
 interface MetaInfo {
     label: string
-    name: string
+    is_private?: boolean
 }
 
-function get_meta_info_by_name(name: string): MetaInfo {
-    if (!name.endsWith(".rss")) return { label: 'default', name: '输入符合系统规则的名字' };
-    const _name = name.split(".");
-    const meta = {
-        label: _name[1] != 'rss' ? _name[1] : 'default',
-        name: _name[0]
-    }
-    return meta
+
+interface Generate_commad_view_file_return {
+    command_view_file: Command_view_file[],
+    copy_view_file: Command_view_file[]
 }
 
-export function useFile() {
-    async function read_data_dir(): Promise<MFileEntry[]> {
-        const dir = await readDir('snippets', { dir: BaseDirectory.AppData, recursive: true });
-        return format_file_dir(dir);
-    }
-    async function read_file(path: string) {
-        return await readTextFile(path);
-    }
-    function format_file_dir(dir: FileEntry[]): MFileEntry[] {
-        return dir.map((item) => {
-            if (item.children) {
-                return {
-                    path: item.path,
-                    is_dir: true,
-                    children: format_file_dir(item.children),
-                    name: item.name!,
-                    label: item.name!
-                }
+export async function generate_commad_view_file(entries: FileEntry[]): Promise<Generate_commad_view_file_return> {
+    const command_view_file: Command_view_file[] = [];
+    const copy_view_file: Command_view_file[] = [];
+    for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        if (entry.children) {
+            const data = {
+                is_dir: true,
+                name: entry.name!,
+                children: await generate_commad_view_file(entry.children)
             }
-            return {
-                path: item.path,
+            command_view_file.push({
+                ...data,
+                children: data.children.command_view_file
+            })
+            copy_view_file.push({
+                ...data,
+                children: data.children.copy_view_file
+            })
+        } else {
+            const _content = await readTextFile(entry.path);
+            const content = _content.replace(/(---[\s\n\t]*.*[\s\n\t]*---[\s\n\t]*)/, '');
+            const [meta, _] = jsYaml.loadAll(_content) as [MetaInfo, string];
+            const data = {
                 is_dir: false,
-                ...get_meta_info_by_name(item.name!)
+                name: entry.name!.slice(0, -3),
+                label: meta.label,
+                content: content,
+                rawContent: _content
             }
-        })
+            command_view_file.push(data)
+            if (!meta.is_private) {
+                copy_view_file.push({
+                    ...data,
+                })
+            }
+        }
     }
     return {
-        read_data_dir,
-        read_file,
-    }
+        command_view_file,
+        copy_view_file
+    };
 }
+
+
+
+
+
+
+

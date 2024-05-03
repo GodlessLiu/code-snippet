@@ -7,7 +7,11 @@ import LocalStorage from "@/lib/localstorage";
 export function use_state_windows() {
     useEffect(() => {
         listen("tauri://move", (e) => {
-            LocalStorage.setItem("position", JSON.stringify(e.payload));
+            if (e.windowLabel === 'main') {
+                LocalStorage.setItem("position", JSON.stringify(e.payload));
+            }
+        }).then(unlisten => {
+            return unlisten;
         })
     }, [])
     const { x, y } = LocalStorage.getItem("position");

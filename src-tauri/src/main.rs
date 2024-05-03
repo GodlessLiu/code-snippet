@@ -31,7 +31,7 @@ fn init_snippet_data_dir() {
     let binding = get_snippet_data_path();
     let data_dir = binding.to_str().unwrap();
     if let Err(_) = fs::read_dir(data_dir) {
-        fs::create_dir(data_dir).expect("failed to create log file");
+        fs::create_dir_all(data_dir).expect("failed to create log file");
     }
 }
 
@@ -39,6 +39,7 @@ fn init_snippet_data_dir() {
 fn open_explore(path: String) {
     let _ = Command::new("explorer.exe").arg(path).spawn();
 }
+
 #[tauri::command]
 fn ctrl_v() {
     unsafe {
@@ -48,6 +49,7 @@ fn ctrl_v() {
         keybd_event(VK_CONTROL as u8, 0, KEYEVENTF_KEYUP, 0); // 释放Ctrl键
     }
 }
+
 fn main() {
     let quit = CustomMenuItem::new("quit".to_string(), "退出");
     let tray_menu = SystemTrayMenu::new().add_item(quit);
