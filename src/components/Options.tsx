@@ -35,7 +35,8 @@ export default function Options() {
             url: '/share',
             width: 500,
             height: 400,
-            resizable: false
+            resizable: false,
+            title: "share"
         });
     }
     return (
