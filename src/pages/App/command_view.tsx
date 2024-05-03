@@ -1,29 +1,25 @@
 import Options from "@/components/Options";
-import { use_state_windows } from "@/hooks/use_state_window";
-import { Command_view_file, generate_commad_view_file } from "@/lib/file";
+import { Command_view_file } from "@/lib/file";
 import { use_code_snippets_store } from "@/stores/code_snippets";
 import { listen } from "@tauri-apps/api/event";
 import { appWindow } from "@tauri-apps/api/window";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
 import { useRef, useCallback, useEffect, useState } from "react";
-import { BaseDirectory, appDataDir } from "@tauri-apps/api/path";
-import { readDir } from "@tauri-apps/api/fs";
 import { watch } from 'tauri-plugin-fs-watch-api';
 import { invoke } from "@tauri-apps/api";
 import { writeText } from "@tauri-apps/api/clipboard";
+import { read_data_file_to_view_file } from "@/hooks/use_view_file";
+import { data_snippets_path } from "@/lib/path";
 
 export function Command_view() {
     const searh_input_ref = useRef<HTMLInputElement>(null);
     const [group, set_group] = useState<Command_view_file[]>([]);
-    // 保存窗口x，y位置
-    use_state_windows();
     const [query, set_query] = useState<string>('');
     const search_input_focus = useCallback(() => {
         if (searh_input_ref.current) {
             searh_input_ref.current.focus();
         }
     }, [])
-
     const command_view_file = use_code_snippets_store((state) => state.command_view_file);
     const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
     useEffect(() => {
@@ -38,15 +34,14 @@ export function Command_view() {
         })
     }, [])
     useEffect(() => {
-        appDataDir().then((dir) => {
+        data_snippets_path().then((path) => {
             watch(
-                dir + '/snippets',
+                path,
                 (_: any) => {
-                    readDir('snippets', { dir: BaseDirectory.AppData, recursive: true }).then(async (entries) => {
-                        const { command_view_file, copy_view_file } = await generate_commad_view_file(entries);
+                    read_data_file_to_view_file().then(({ entries, command_view_file, copy_view_file }) => {
                         set_file_entries(entries, command_view_file, copy_view_file);
                         set_group(command_view_file);
-                    });
+                    })
                 },
                 { recursive: true },
             );
