@@ -42,9 +42,9 @@ export function Command_view() {
             watch(
                 dir + '/snippets',
                 (_: any) => {
-                    readDir('snippets', { dir: BaseDirectory.AppData, recursive: true }).then(async entries => {
-                        const command_view_file = await generate_commad_view_file(entries);
-                        set_file_entries(entries, command_view_file);
+                    readDir('snippets', { dir: BaseDirectory.AppData, recursive: true }).then(async (entries) => {
+                        const { command_view_file, copy_view_file } = await generate_commad_view_file(entries);
+                        set_file_entries(entries, command_view_file, copy_view_file);
                         set_group(command_view_file);
                     });
                 },
@@ -64,10 +64,10 @@ export function Command_view() {
         set_query('');
     }
     return (
-        <Command className="rounded-lg border shadow-md w-full h-[384px] overflow-auto">
+        <Command>
             <Options />
             <CommandInput placeholder="Type a snippet name to search..." ref={searh_input_ref} value={query} onValueChange={set_query} />
-            <CommandList className='list outline-none'>
+            <CommandList className='list outline-none' key='list'>
                 <CommandEmpty>No results found.</CommandEmpty>
                 {
                     group.length > 0 && group.map((item) => {
@@ -80,7 +80,7 @@ export function Command_view() {
                                                 {
                                                     item.children && item.children.length > 0 && item.children!.map((child) => {
                                                         return (
-                                                            <CommandItem onSelect={() => handleSelect(child.content!)}>
+                                                            <CommandItem onSelect={() => handleSelect(child.content!)} key={child.name}>
                                                                 <span className='inline-block h-[9px] w-[9px] rotate-45 mr-2 bg-red-600'></span> <span>{child.name}</span>
                                                                 <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>{child.label}</span>
                                                             </CommandItem>

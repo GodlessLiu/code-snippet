@@ -6,35 +6,62 @@ export interface Command_view_file {
     name: string,
     label?: string,
     children?: Command_view_file[],
-    content?: string
+    content?: string,
+    rawContent?: string
 }
 interface MetaInfo {
     label: string
+    is_private?: boolean
 }
 
-export async function generate_commad_view_file(entries: FileEntry[]): Promise<Command_view_file[]> {
+
+interface Generate_commad_view_file_return {
+    command_view_file: Command_view_file[],
+    copy_view_file: Command_view_file[]
+}
+
+export async function generate_commad_view_file(entries: FileEntry[]): Promise<Generate_commad_view_file_return> {
     const command_view_file: Command_view_file[] = [];
+    const copy_view_file: Command_view_file[] = [];
     for (let i = 0; i < entries.length; i++) {
         const entry = entries[i];
-        if (entry.children?.length) {
-            command_view_file.push({
+        if (entry.children) {
+            const data = {
                 is_dir: true,
                 name: entry.name!,
                 children: await generate_commad_view_file(entry.children)
+            }
+            command_view_file.push({
+                ...data,
+                children: data.children.command_view_file
+            })
+            copy_view_file.push({
+                ...data,
+                children: data.children.copy_view_file
             })
         } else {
             const _content = await readTextFile(entry.path);
             const content = _content.replace(/(---[\s\n\t]*.*[\s\n\t]*---[\s\n\t]*)/, '');
             const [meta, _] = jsYaml.loadAll(_content) as [MetaInfo, string];
-            command_view_file.push({
+            const data = {
                 is_dir: false,
                 name: entry.name!.slice(0, -3),
                 label: meta.label,
-                content: content
-            })
+                content: content,
+                rawContent: _content
+            }
+            command_view_file.push(data)
+            if (!meta.is_private) {
+                copy_view_file.push({
+                    ...data,
+                })
+            }
         }
     }
-    return command_view_file;
+    return {
+        command_view_file,
+        copy_view_file
+    };
 }
 
 
