@@ -1,7 +1,9 @@
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
-import { Command_view_file, create_snippet_dir, snippet_exist, write_snippet_file } from "@/lib/file"
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Command_view_file, create_snippet_dir, snippet_exist, write_snippet_file } from "@/lib/file";
+import AceEditor from 'react-ace';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-github';
 export function Share() {
     const [value, setValue] = useState<string>("")
     const [process, setProcess] = useState<number>(0)
@@ -37,8 +39,21 @@ export function Share() {
     }
 
     return <div className="h-[400px] w-[500px]">
-        <span className="inline-block h-[4px] bg-red-300 absolute top-0" style={{ width: process }}></span>
-        <Textarea className=" h-[360px] w-full" value={value} onChange={(e) => setValue(e.target.value)} />
+        <span className="inline-block h-[4px] bg-red-300 absolute top-0 z-50" style={{ width: process }}></span>
+        <AceEditor
+            mode="json"
+            theme="github"
+            height="360px"
+            value={value}
+            onChange={setValue}
+            name="code_share"
+            fontSize={14}
+            lineHeight={19}
+            setOptions={{
+                tabSize: 2
+            }}
+            editorProps={{ $blockScrolling: true }}
+        />
         <Button variant="outline" size='sm' onClick={() => download(value)}>导入</Button>
     </div>
 }
