@@ -18,13 +18,13 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
     // 开机自启动
     useAutoStart();
     // 阻止鼠标右键
-    // useEffect(() => {
-    //     function fn(e: MouseEvent) {
-    //         e.preventDefault();
-    //     }
-    //     document.addEventListener('contextmenu', fn);
-    //     return () => document.removeEventListener('contextmenu', fn);
-    // }, [])
+    useEffect(() => {
+        function fn(e: MouseEvent) {
+            e.preventDefault();
+        }
+        document.addEventListener('contextmenu', fn);
+        return () => document.removeEventListener('contextmenu', fn);
+    }, [])
     // 记录主window位置 
     use_state_windows();
     return <>
