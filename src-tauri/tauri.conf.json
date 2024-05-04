@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "code-snippet",
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "tauri": {
     "allowlist": {
@@ -37,6 +37,7 @@
         "all": false,
         "readFile": true,
         "readDir": true,
+        "createDir": true,
         "exists": true,
         "writeFile": true,
         "scope": [
