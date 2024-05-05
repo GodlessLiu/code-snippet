@@ -10,7 +10,8 @@ import { invoke } from "@tauri-apps/api";
 import { writeText } from "@tauri-apps/api/clipboard";
 import { read_data_file_to_view_file } from "@/hooks/use_view_file";
 import { data_snippets_path } from "@/lib/path";
-
+import Iyuan from "@/assets/images/iyuan.png";
+import labelBg from "@/assets/images/label_bg.png";
 export function Command_view() {
     const searh_input_ref = useRef<HTMLInputElement>(null);
     const [group, set_group] = useState<Command_view_file[]>([]);
@@ -76,8 +77,11 @@ export function Command_view() {
                                                     item.children && item.children.length > 0 && item.children!.map((child) => {
                                                         return (
                                                             <CommandItem onSelect={() => handleSelect(child.content!)} key={child.name}>
-                                                                <span className='inline-block h-[9px] w-[9px] rotate-45 mr-2 bg-red-600'></span> <span>{child.name}</span>
-                                                                <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>{child.label}</span>
+                                                                <span className='inline-block h-[20px] w-[20px] mr-1 bg-cover' style={{ backgroundImage: `url('${Iyuan}')` }}></span> <span>{child.name}</span>
+                                                                <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>
+                                                                    {child.label}
+                                                                    <span className="inline-block bg-cover h-5 w-5 absolute -top-[10px]" style={{ backgroundImage: `url(${labelBg})` }}></span>
+                                                                </span>
                                                             </CommandItem>
                                                         )
                                                     })
@@ -85,8 +89,11 @@ export function Command_view() {
                                             </CommandGroup>
                                             < CommandSeparator />
                                         </> : <CommandItem className='ml-1' onSelect={() => handleSelect(item.content!)} key={item.name!}>
-                                            <span className='inline-block h-[9px] w-[9px] rotate-45 mr-2 bg-red-600'></span> <span>{item.name}</span>
-                                            <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>{item.label}</span>
+                                            <span className='inline-block h-[20px] w-[20px] mr-1 bg-cover' style={{ backgroundImage: `url('${Iyuan}')` }}></span> <span>{item.name}</span>
+                                            <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-3 border-2'>
+                                                {item.label}
+                                                <span className="inline-block bg-cover h-5 w-5 absolute -top-[10px]" style={{ backgroundImage: `url(${labelBg})` }}></span>
+                                            </span>
                                         </CommandItem>
                                 }
 

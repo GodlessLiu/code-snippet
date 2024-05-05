@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "code-snippet",
-    "version": "2.1.0"
+    "version": "2.1.11"
   },
   "tauri": {
     "allowlist": {
@@ -28,6 +28,7 @@
         "close": true,
         "hide": true,
         "create": true,
+        "unminimize": true,
         "setFocus": true,
         "show": true,
         "startDragging": true,

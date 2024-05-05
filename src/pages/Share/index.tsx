@@ -36,7 +36,7 @@ export function Share() {
 
     return <div className="h-[400px] w-[500px]">
         <JsonEditor value={value} setValue={setValue} />
-        <Button onClick={() => download(value)} variant="ghost" size='sm' className="float-right mr-2">
+        <Button onClick={() => download(value)} variant="ghost" size='sm' className="float-right mr-2 mt-1">
             {
                 loading ? <Loader2 className="animate-spin text-gray-500" fontSize={12} /> : '导入'
             }
