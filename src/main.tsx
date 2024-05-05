@@ -6,10 +6,23 @@ import {
   RouterProvider
 } from "react-router-dom";
 import { Share } from "@/pages/Share";
+import { Settings } from "@/pages/Settings";
+import { Command_view } from "@/pages/App/command_view";
+import { Setup } from "@/process/Setup";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Command_view />,
+      },
+      {
+        path: '/settings',
+        element: <Settings />
+      }
+    ]
   },
   {
     path: '/share',
@@ -17,5 +30,7 @@ const router = createBrowserRouter([
   }
 ]);
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <RouterProvider router={router} />
+  <Setup>
+    <RouterProvider router={router} />
+  </Setup>
 );

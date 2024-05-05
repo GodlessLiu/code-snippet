@@ -51,8 +51,9 @@ fn ctrl_v() {
 }
 
 fn main() {
+    let restart = CustomMenuItem::new("restart".to_string(), "重启");
     let quit = CustomMenuItem::new("quit".to_string(), "退出");
-    let tray_menu = SystemTrayMenu::new().add_item(quit);
+    let tray_menu = SystemTrayMenu::new().add_item(quit).add_item(restart);
     let system_tray = SystemTray::new().with_menu(tray_menu);
     tauri::Builder::default()
         .system_tray(system_tray)
@@ -81,6 +82,9 @@ fn main() {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "quit" => {
                     std::process::exit(0);
+                }
+                "restart" => {
+                    app.restart();
                 }
                 _ => {}
             },

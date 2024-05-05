@@ -7,6 +7,8 @@ import { PhDownloadSimpleFill } from "@/components/icons/download";
 import { MaterialSymbolsIosShareSharp } from "@/components/icons/share";
 import { WebviewWindow, getAll } from "@tauri-apps/api/window";
 import { data_snippets_path } from "@/lib/path";
+import { MaterialSymbolsSettingsOutline } from "@/components/icons/setting";
+import { useNavigate } from "react-router-dom";
 export default function Options() {
     function handle_explore() {
         data_snippets_path().then((path) => {
@@ -37,10 +39,15 @@ export default function Options() {
             });
         }
     }
+    const navigate = useNavigate();
+    function handle_setting() {
+        navigate('/settings');
+    }
     return (
         <div className="options h-8 py-1 flex justify-end items-center px-2 gap-2 text-xl text-gray-500 border-b">
             <PhDownloadSimpleFill className="cursor-pointer" onClick={handle_share} />
             <MdiFileMoveOutline className="cursor-pointer" onClick={handle_explore} />
+            <MaterialSymbolsSettingsOutline className="cursor-pointer" onClick={handle_setting} />
             <MaterialSymbolsIosShareSharp className="cursor-pointer" onClick={hadnle_export} />
         </div>
     )

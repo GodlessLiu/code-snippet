@@ -1,7 +1,7 @@
-import { TitleBar } from "@/components/TitleBar";
 import { useAutoStart } from "@/hooks/use_auto_start";
 import { use_state_windows } from "@/hooks/use_state_window";
 import { read_data_file_to_view_file } from "@/hooks/use_view_file";
+import { Setting_wrapper } from "@/pages/Settings/Setting_provider";
 import { use_code_snippets_store } from "@/stores/code_snippets";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 
@@ -27,8 +27,9 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
     }, [])
     // 记录主window位置 
     use_state_windows();
-    return <>
-        <TitleBar />
+    return <Setting_wrapper>
         {loading ? <p className="rounded-lg border shadow-md bg-white indent-2 py-1">loading...</p> : children}
-    </>
+    </Setting_wrapper>
+
+
 }

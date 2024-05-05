@@ -12,6 +12,8 @@ import { read_data_file_to_view_file } from "@/hooks/use_view_file";
 import { data_snippets_path } from "@/lib/path";
 import Iyuan from "@/assets/images/iyuan.png";
 import labelBg from "@/assets/images/label_bg.png";
+import { TitleBar } from "@/components/TitleBar";
+
 export function Command_view() {
     const searh_input_ref = useRef<HTMLInputElement>(null);
     const [group, set_group] = useState<Command_view_file[]>([]);
@@ -59,8 +61,10 @@ export function Command_view() {
     function clear() {
         set_query('');
     }
+
     return (
         <Command>
+            <TitleBar />
             <Options />
             <CommandInput placeholder="Type a snippet name to search..." ref={searh_input_ref} value={query} onValueChange={set_query} />
             <CommandList className='list outline-none' key='list'>
