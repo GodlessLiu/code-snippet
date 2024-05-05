@@ -61,7 +61,9 @@ export function Command_view() {
     function clear() {
         set_query('');
     }
-
+    function format_name(name: string) {
+        return name.slice(0, -3)
+    }
     return (
         <Command>
             <TitleBar />
@@ -81,7 +83,7 @@ export function Command_view() {
                                                     item.children && item.children.length > 0 && item.children!.map((child) => {
                                                         return (
                                                             <CommandItem onSelect={() => handleSelect(child.content!)} key={child.name}>
-                                                                <span className='inline-block h-[20px] w-[20px] mr-1 bg-cover' style={{ backgroundImage: `url('${Iyuan}')` }}></span> <span>{child.name}</span>
+                                                                <span className='inline-block h-[20px] w-[20px] mr-1 bg-cover' style={{ backgroundImage: `url('${Iyuan}')` }}></span> <span>{format_name(child.name)}</span>
                                                                 <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-2 border-2'>
                                                                     {child.label}
                                                                     <span className="inline-block bg-cover h-5 w-5 absolute -top-[10px]" style={{ backgroundImage: `url(${labelBg})` }}></span>
@@ -93,7 +95,7 @@ export function Command_view() {
                                             </CommandGroup>
                                             < CommandSeparator />
                                         </> : <CommandItem className='ml-1' onSelect={() => handleSelect(item.content!)} key={item.name!}>
-                                            <span className='inline-block h-[20px] w-[20px] mr-1 bg-cover' style={{ backgroundImage: `url('${Iyuan}')` }}></span> <span>{item.name}</span>
+                                            <span className='inline-block h-[20px] w-[20px] mr-1 bg-cover' style={{ backgroundImage: `url('${Iyuan}')` }}></span> <span>{format_name(item.name)}</span>
                                             <span className='ml-2 text-xs bg-gray-50 px-1 absolute right-3 border-2'>
                                                 {item.label}
                                                 <span className="inline-block bg-cover h-5 w-5 absolute -top-[10px]" style={{ backgroundImage: `url(${labelBg})` }}></span>

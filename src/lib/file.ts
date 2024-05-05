@@ -39,7 +39,7 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<G
             const { content, data: meta } = matter(_content)
             const data = {
                 is_dir: false,
-                name: entry.name!.slice(0, -3),
+                name: entry.name!,
                 label: meta.label,
                 content: content,
                 rawContent: _content
@@ -47,8 +47,7 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<G
             command_view_file.push(data)
             if (!meta.is_private) {
                 copy_view_file.push({
-                    ...data,
-                    name: entry.name!,
+                    ...data
                 })
             }
         }

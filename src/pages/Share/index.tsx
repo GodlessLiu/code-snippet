@@ -13,13 +13,11 @@ export function Share() {
         _value.forEach(async (element: Command_view_file) => {
             if (element.is_dir) {
                 if (!await snippet_exist(element.name)) {
-                    console.log(element.name);
-
                     await create_snippet_dir(element.name)
                 }
                 element.children?.forEach(async (child: Command_view_file) => {
-                    if (await snippet_exist(element.name + '\\' + child.name + '.md')) return
-                    await write_snippet_file(element.name + '\\' + child.name + '.md', child.rawContent!)
+                    if (await snippet_exist(element.name + '\\' + child.name)) return
+                    await write_snippet_file(element.name + '\\' + child.name, child.rawContent!)
                 })
                 return
             }
@@ -43,5 +41,3 @@ export function Share() {
         </Button>
     </div>
 }
-
-
