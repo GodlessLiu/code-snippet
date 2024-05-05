@@ -48,6 +48,7 @@ export async function generate_commad_view_file(entries: FileEntry[]): Promise<G
             if (!meta.is_private) {
                 copy_view_file.push({
                     ...data,
+                    name: entry.name!,
                 })
             }
         }
