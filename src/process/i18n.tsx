@@ -16,7 +16,8 @@ const resources = {
         setting: {
             "font_family": "Systerm font_family",
             "language": "Language",
-            "theme": "Theme"
+            "theme": "Theme",
+            "short_cut": "ShortClasut"
         }
     },
     zh: {
@@ -32,7 +33,8 @@ const resources = {
         "setting": {
             "font_family": "系统字体",
             "language": "语言",
-            "theme": "主题"
+            "theme": "主题",
+            "short_cut": "快捷键"
         }
     }
 }

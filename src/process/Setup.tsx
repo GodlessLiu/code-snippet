@@ -3,8 +3,10 @@ import { use_state_windows } from "@/hooks/use_state_window";
 import { read_data_file_to_view_file } from "@/hooks/use_view_file";
 import { Setting_wrapper } from "@/pages/Settings/Setting_provider";
 import { use_code_snippets_store } from "@/stores/code_snippets";
+import { register } from "@tauri-apps/api/globalShortcut";
+import { appWindow } from "@tauri-apps/api/window";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-
+import Localstorage from "@/lib/localstorage";
 export const Setup: FC<PropsWithChildren> = ({ children }) => {
     const [loading, set_loading] = useState(true);
     const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
@@ -25,6 +27,25 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
         document.addEventListener('contextmenu', fn);
         return () => document.removeEventListener('contextmenu', fn);
     }, [])
+    // 阻止快捷键刷新
+    useEffect(() => {
+        function fn(e: KeyboardEvent) {
+            if (e.key == "F5" || (e.ctrlKey && e.key == "r")) {
+                e.preventDefault();
+            }
+        }
+        document.addEventListener('keydown', fn);
+        return () => document.removeEventListener('keydown', fn);
+    }, [])
+    // 注册快捷键
+    register(Localstorage.getItem("short_cut", false) || "Alt+l", async () => {
+        const is_vissible = await appWindow.isVisible()
+        if (is_vissible) {
+            appWindow.hide()
+        } else {
+            appWindow.show()
+        }
+    })
     // 记录主window位置 
     use_state_windows();
     return <Setting_wrapper>

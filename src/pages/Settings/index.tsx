@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Font_family } from "@/pages/Settings/items/Font_family";
 import { TitleBar } from "@/components/TitleBar";
 import { Language } from "@/pages/Settings/items/Language";
+import { Short_cut } from "@/pages/Settings/items/Short_cut";
 export const Settings = () => {
     const navigate = useNavigate();
     function handle_return() {
@@ -15,6 +16,7 @@ export const Settings = () => {
             <div className="setting_content pt-2">
                 <Font_family />
                 <Language />
+                <Short_cut />
             </div>
         </div>
 

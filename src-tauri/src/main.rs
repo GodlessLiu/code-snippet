@@ -103,26 +103,26 @@ fn main() {
             window.set_decorations(false).unwrap();
             window.set_resizable(false).unwrap();
             let mut global_shortcut_manager = app.global_shortcut_manager();
-            global_shortcut_manager
-                .register("Alt+l", move || {
-                    if let Ok(e) = window.is_visible() {
-                        if e {
-                            window.hide().unwrap();
-                        } else {
-                            window.show().unwrap();
-                            window.set_focus().unwrap();
-                            window
-                                .emit(
-                                    "handle_show",
-                                    payload::Payload {
-                                        msg: "handle show ".to_string(),
-                                    },
-                                )
-                                .unwrap();
-                        }
-                    }
-                })
-                .unwrap();
+            // global_shortcut_manager
+            //     .register("Alt+l", move || {
+            //         if let Ok(e) = window.is_visible() {
+            //             if e {
+            //                 window.hide().unwrap();
+            //             } else {
+            //                 window.show().unwrap();
+            //                 window.set_focus().unwrap();
+            //                 window
+            //                     .emit(
+            //                         "handle_show",
+            //                         payload::Payload {
+            //                             msg: "handle show ".to_string(),
+            //                         },
+            //                     )
+            //                     .unwrap();
+            //             }
+            //         }
+            //     })
+            //     .unwrap();
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![open_explore, ctrl_v])
