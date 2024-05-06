@@ -9,7 +9,7 @@ interface Font_family {
 
 interface Setting {
     font_family: Font_family
-    change_font: (font: string) => void
+    change_font: (font_name: string) => void
     font_familys: Font_family[]
 }
 
