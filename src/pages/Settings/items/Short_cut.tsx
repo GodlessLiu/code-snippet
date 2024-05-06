@@ -32,7 +32,7 @@ export const Short_cut = () => {
         e.preventDefault()
         if (e.ctrlKey && e.key != "Control") {
             const keys = "Control" + '+' + e.key
-            if (keys != short_cut) {
+            if (keys != Localstorage.getItem("short_cut", false)) {
                 set_pre_short_cut(Localstorage.getItem("short_cut", false))
                 set_short_cut(keys)
                 inputRef.current?.blur()
@@ -40,7 +40,7 @@ export const Short_cut = () => {
         }
         if (e.altKey && e.key != "Alt") {
             const keys = "Alt" + '+' + e.key
-            if (keys != short_cut) {
+            if (keys != Localstorage.getItem("short_cut", false)) {
                 set_pre_short_cut(Localstorage.getItem("short_cut", false))
                 set_short_cut(keys)
                 inputRef.current?.blur()
@@ -48,7 +48,7 @@ export const Short_cut = () => {
         }
         if (e.shiftKey && e.key != "Shift") {
             const keys = "Shift" + '+' + e.key
-            if (keys != short_cut) {
+            if (keys != Localstorage.getItem("short_cut", false)) {
                 set_pre_short_cut(Localstorage.getItem("short_cut", false))
                 set_short_cut(keys)
                 inputRef.current?.blur()
