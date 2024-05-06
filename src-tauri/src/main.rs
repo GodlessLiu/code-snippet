@@ -8,8 +8,7 @@ mod payload;
 use std::{fs, path::PathBuf, process::Command};
 use tauri::{
     api::path::{resolve_path, BaseDirectory},
-    CustomMenuItem, Env, GlobalShortcutManager, Manager, SystemTray, SystemTrayEvent,
-    SystemTrayMenu,
+    CustomMenuItem, Env, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
 };
 use tauri_plugin_autostart::MacosLauncher;
 
