@@ -13,8 +13,10 @@ import { data_snippets_path } from "@/lib/path";
 import Iyuan from "@/assets/images/iyuan.png";
 import labelBg from "@/assets/images/label_bg.png";
 import { TitleBar } from "@/components/TitleBar";
+import { useTranslation } from "react-i18next";
 
 export function Command_view() {
+    const { t } = useTranslation()
     const searh_input_ref = useRef<HTMLInputElement>(null);
     const [group, set_group] = useState<Command_view_file[]>([]);
     const [query, set_query] = useState<string>('');
@@ -68,9 +70,9 @@ export function Command_view() {
         <Command>
             <TitleBar />
             <Options />
-            <CommandInput placeholder="Type a snippet name to search..." ref={searh_input_ref} value={query} onValueChange={set_query} />
-            <CommandList className='list outline-none' key='list'>
-                <CommandEmpty>No results found.</CommandEmpty>
+            <CommandInput placeholder={t("home.search_text")} ref={searh_input_ref} value={query} onValueChange={set_query} />
+            <CommandList className='list outline-none'>
+                <CommandEmpty>{t("home.snippet_not_find")}</CommandEmpty>
                 {
                     group.length > 0 && group.map((item) => {
                         return (

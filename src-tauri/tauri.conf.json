@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "code-snippet",
-    "version": "2.1.11"
+    "version": "2.1.12"
   },
   "tauri": {
     "allowlist": {
@@ -25,6 +25,7 @@
       },
       "window": {
         "all": false,
+        "unmaximize": true,
         "close": true,
         "hide": true,
         "create": true,

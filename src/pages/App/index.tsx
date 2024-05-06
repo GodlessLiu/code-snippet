@@ -1,7 +1,7 @@
 import app_bg from '@/assets/images/app_bg.jpeg';
 import { Outlet } from "react-router-dom";
 import { useContext } from "react";
-import { SettingContext } from "@/pages/Settings/Setting_provider";
+import { SettingContext } from "@/pages/Settings/contexts/Setting_context";
 function App() {
   const { font_family } = useContext(SettingContext)
 

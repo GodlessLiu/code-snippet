@@ -9,6 +9,7 @@ import { Share } from "@/pages/Share";
 import { Settings } from "@/pages/Settings";
 import { Command_view } from "@/pages/App/command_view";
 import { Setup } from "@/process/Setup";
+import { init_i18n } from "@/process/i18n";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
     element: <Share />
   }
 ]);
+init_i18n();
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Setup>
     <RouterProvider router={router} />

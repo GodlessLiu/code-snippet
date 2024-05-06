@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Command_view_file, create_snippet_dir, snippet_exist, write_snippet_file } from "@/lib/file";
 import { JsonEditor } from "@/pages/Share/JsonEditor";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 export function Share() {
+    const { t } = useTranslation()
     const [value, setValue] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     function download(value: string) {
@@ -36,7 +38,7 @@ export function Share() {
         <JsonEditor value={value} setValue={setValue} />
         <Button onClick={() => download(value)} variant="ghost" size='sm' className="float-right mr-2 mt-1">
             {
-                loading ? <Loader2 className="animate-spin text-gray-500" fontSize={12} /> : '导入'
+                loading ? <Loader2 className="animate-spin text-gray-500" fontSize={12} /> : t("share.import")
             }
         </Button>
     </div>

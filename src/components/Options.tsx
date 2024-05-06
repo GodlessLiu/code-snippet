@@ -9,6 +9,7 @@ import { WebviewWindow, getAll } from "@tauri-apps/api/window";
 import { data_snippets_path } from "@/lib/path";
 import { MaterialSymbolsSettingsOutline } from "@/components/icons/setting";
 import { useNavigate } from "react-router-dom";
+import { t } from "i18next";
 export default function Options() {
     function handle_explore() {
         data_snippets_path().then((path) => {
@@ -18,7 +19,7 @@ export default function Options() {
     const copy_view_file = use_code_snippets_store((state) => state.copy_view_file);
     async function hadnle_export() {
         writeText(JSON.stringify(copy_view_file, null, 2));
-        await message('The exported data has been copied to the clipboard!!', 'code-snippets')
+        await message(t("share.export_message"), 'code-snippets')
     }
     async function handle_share() {
         const all = getAll();
@@ -35,7 +36,7 @@ export default function Options() {
                 width: 500,
                 height: 400,
                 resizable: false,
-                title: "Share"
+                title: t("share.window_title")
             });
         }
     }
