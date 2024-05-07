@@ -8,7 +8,7 @@ mod payload;
 use std::{fs, path::PathBuf, process::Command};
 use tauri::{
     api::path::{resolve_path, BaseDirectory},
-    CustomMenuItem, Env, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
+    Context, CustomMenuItem, Env, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
 };
 use tauri_plugin_autostart::MacosLauncher;
 
@@ -52,7 +52,7 @@ fn ctrl_v() {
 fn main() {
     let restart = CustomMenuItem::new("restart".to_string(), "重启");
     let quit = CustomMenuItem::new("quit".to_string(), "退出");
-    let tray_menu = SystemTrayMenu::new().add_item(quit).add_item(restart);
+    let tray_menu = SystemTrayMenu::new().add_item(restart).add_item(quit);
     let system_tray = SystemTray::new().with_menu(tray_menu);
     tauri::Builder::default()
         .system_tray(system_tray)

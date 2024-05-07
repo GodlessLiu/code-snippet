@@ -13,6 +13,10 @@ export const Setting_wrapper: FC<PropsWithChildren> = ({ children }) => {
         {
             name: "微软雅黑",
             value: "Microsoft YaHei, 微软雅黑, SimHei, 黑体, sans-serif"
+        },
+        {
+            name: "monospace",
+            value: "ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace"
         }
     ]
     const [font, setFont] = useState<Font_family>(font_familys.find(i => i.name === Localstorage.getItem("setting_font")) || {

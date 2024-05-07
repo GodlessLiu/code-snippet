@@ -11,7 +11,7 @@ export const Font_family = () => {
     }
     return <Setting_item title={t("setting.font_family") + ':'}>
         <Select value={font_family.name} onValueChange={(e: string) => handle_value_change(e)}>
-            <SelectTrigger className="w-[90px]">
+            <SelectTrigger className="w-[98px]">
                 <SelectValue placeholder={font_family.name} />
             </SelectTrigger>
             <SelectContent>

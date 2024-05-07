@@ -64,6 +64,6 @@ export const Short_cut = () => {
         inputRef.current?.removeEventListener("keydown", handle_input)
     }
     return <Setting_item title={t("setting.short_cut") + ":"}>
-        <input value={short_cut} readOnly className="inline-block border-2 w-[120px] p-1 h-[28px] outline-none" ref={inputRef} style={{ borderColor: border_color }} onBlur={hanler_blur} onFocus={handle_focus} />
+        <input value={short_cut} readOnly className="inline-block border-2 w-[120px] p-1 h-[28px] text-center outline-none" ref={inputRef} style={{ borderColor: border_color }} onBlur={hanler_blur} onFocus={handle_focus} />
     </Setting_item>
 }
