@@ -17,7 +17,8 @@ const resources = {
             "font_family": "Systerm font_family",
             "language": "Language",
             "theme": "Theme",
-            "short_cut": "ShortClasut"
+            "short_cut": "ShortClasut",
+            "auto_start": "Auto start"
         }
     },
     zh: {
@@ -34,7 +35,8 @@ const resources = {
             "font_family": "系统字体",
             "language": "语言",
             "theme": "主题",
-            "short_cut": "快捷键"
+            "short_cut": "快捷键",
+            "auto_start": "开机自启"
         }
     }
 }

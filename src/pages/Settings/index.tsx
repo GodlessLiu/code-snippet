@@ -4,6 +4,7 @@ import { Font_family } from "@/pages/Settings/items/Font_family";
 import { TitleBar } from "@/components/TitleBar";
 import { Language } from "@/pages/Settings/items/Language";
 import { Short_cut } from "@/pages/Settings/items/Short_cut";
+import { Auto_start } from "@/pages/Settings/items/Auto_start";
 export const Settings = () => {
     const navigate = useNavigate();
     function handle_return() {
@@ -17,6 +18,7 @@ export const Settings = () => {
                 <Font_family />
                 <Language />
                 <Short_cut />
+                <Auto_start />
             </div>
         </div>
 
