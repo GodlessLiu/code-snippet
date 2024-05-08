@@ -1,15 +1,15 @@
 import { createContext } from "react"
 
-export type Local = {
+export type Local_language = {
     name: string,
     value: string
 }
 export interface Language_type {
-    locals?: Local[]
-    local: Local
+    locals?: Local_language[]
+    local: Local_language
     set_local: (lang: string) => void
 }
-export const locals: Local[] = [{
+export const language_locals: Local_language[] = [{
     name: 'English',
     value: 'en'
 }, {
@@ -17,7 +17,7 @@ export const locals: Local[] = [{
     value: 'zh-CN'
 }]
 export const LanguageContext = createContext<Language_type>({
-    locals: locals,
+    locals: language_locals,
     local: {
         name: "English",
         value: 'en'

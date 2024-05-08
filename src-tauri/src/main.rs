@@ -1,14 +1,13 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 extern crate winapi;
-
 use winapi::um::winuser::{keybd_event, KEYEVENTF_KEYUP, VK_CONTROL};
 
 mod payload;
 use std::{fs, path::PathBuf, process::Command};
 use tauri::{
     api::path::{resolve_path, BaseDirectory},
-    Context, CustomMenuItem, Env, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
+    CustomMenuItem, Env, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
 };
 use tauri_plugin_autostart::MacosLauncher;
 
@@ -94,13 +93,11 @@ fn main() {
             MacosLauncher::LaunchAgent,
             Some(vec!["--flag1", "--flag2"]),
         ))
+        .plugin(tauri_plugin_window_state::Builder::default().build())
         .setup(|app| {
             init_snippet_data_dir();
             let window = app.get_window("main").unwrap();
             window.hide().unwrap();
-            window.set_always_on_top(true).unwrap();
-            window.set_decorations(false).unwrap();
-            window.set_resizable(false).unwrap();
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![open_explore, ctrl_v])

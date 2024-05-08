@@ -13,7 +13,6 @@ export const Short_cut = () => {
     const [pre_short_cut, set_pre_short_cut] = useState<string>("")
     useEffect(() => {
         if (!short_cut) return;
-        console.log(pre_short_cut, short_cut);
         if (pre_short_cut) {
             unregister(pre_short_cut)
         }
@@ -27,7 +26,7 @@ export const Short_cut = () => {
         })
         Localstorage.setItem("short_cut", short_cut)
         return
-    }, [short_cut])
+    }, [short_cut, pre_short_cut])
     const handle_input = useCallback((e: KeyboardEvent) => {
         e.preventDefault()
         if (e.ctrlKey && e.key != "Control") {

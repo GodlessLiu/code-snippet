@@ -1,14 +1,16 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/theme-github";
-import share_bg from "@/assets/images/share_bg.webp";
+import { ThemeContext } from "@/pages/Settings/contexts/theme_context";
 interface Props {
     value: string;
     setValue: (value: string) => void;
 }
 
 export const JsonEditor: FC<Props> = ({ value, setValue }) => {
+    const { themes, local } = useContext(ThemeContext)
+
     return <AceEditor
         mode="json"
         theme="github"
@@ -19,7 +21,7 @@ export const JsonEditor: FC<Props> = ({ value, setValue }) => {
         fontSize={14}
         className=" bg-cover"
         style={{
-            backgroundImage: `url(${share_bg})`,
+            backgroundImage: `url(${themes[local].share_editor_bg})`,
             backgroundColor: "rgba(255,255,255,0.8)"
         }}
         lineHeight={19}
