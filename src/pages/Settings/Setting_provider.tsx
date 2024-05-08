@@ -74,7 +74,7 @@ export const Setting_wrapper: FC<PropsWithChildren> = ({ children }) => {
         name: "右上",
         value: "tr"
     })
-    const [theme, set_theme] = useState<string>(Localstorage.getItem("theme") || 'conan')
+    const [theme, set_theme] = useState<string>(Localstorage.getItem("theme", false) || 'conan')
     const change_local_language = (lang_name: string) => {
         const i = language_locals.find(i => i.name === lang_name)
         set_lang(i || { name: "English", value: "en" })
