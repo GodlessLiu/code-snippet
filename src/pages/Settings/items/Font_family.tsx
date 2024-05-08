@@ -10,7 +10,7 @@ export const Font_family = () => {
         change_font(e)
     }
     return <Setting_item title={t("setting.font_family") + ':'}>
-        <Select onValueChange={(e: string) => handle_value_change(e)}>
+        <Select defaultValue={font_family.name} onValueChange={(e: string) => handle_value_change(e)}>
             <SelectTrigger className="w-[98px]">
                 <SelectValue placeholder={font_family.name} />
             </SelectTrigger>

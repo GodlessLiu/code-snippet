@@ -8,7 +8,7 @@ export const Language = () => {
     const { local, locals, set_local } = useContext(LanguageContext)
 
     return <Setting_item title={t("setting.language") + ":"}>
-        <Select onValueChange={(e: string) => set_local(e)}>
+        <Select defaultValue={local.name} onValueChange={(e: string) => set_local(e)}>
             <SelectTrigger className="w-[90px]">
                 <SelectValue placeholder={local.name} />
             </SelectTrigger>

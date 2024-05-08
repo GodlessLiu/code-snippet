@@ -39,7 +39,7 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
         return () => document.removeEventListener('keydown', fn);
     }, [])
     // 注册快捷键
-    register(Localstorage.getItem("short_cut", false) || "Alt+l", async () => {
+    register(Localstorage.getItem("short_cut") || "Alt+l", async () => {
         const is_vissible = await appWindow.isVisible()
         if (is_vissible) {
             appWindow.hide()

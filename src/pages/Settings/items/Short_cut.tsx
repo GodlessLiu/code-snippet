@@ -9,7 +9,7 @@ export const Short_cut = () => {
     const { t } = useTranslation()
     const inputRef = useRef<HTMLInputElement>(null)
     const [border_color, set_border_color] = useState('black')
-    const [short_cut, set_short_cut] = useState<string>(Localstorage.getItem("short_cut", false) || "Alt+l")
+    const [short_cut, set_short_cut] = useState<string>(Localstorage.getItem("short_cut") || "Alt+l")
     const [pre_short_cut, set_pre_short_cut] = useState<string>("")
     useEffect(() => {
         if (!short_cut) return;
@@ -31,24 +31,24 @@ export const Short_cut = () => {
         e.preventDefault()
         if (e.ctrlKey && e.key != "Control") {
             const keys = "Control" + '+' + e.key
-            if (keys != Localstorage.getItem("short_cut", false)) {
-                set_pre_short_cut(Localstorage.getItem("short_cut", false))
+            if (keys != Localstorage.getItem("short_cut")) {
+                set_pre_short_cut(Localstorage.getItem("short_cut")!)
                 set_short_cut(keys)
                 inputRef.current?.blur()
             }
         }
         if (e.altKey && e.key != "Alt") {
             const keys = "Alt" + '+' + e.key
-            if (keys != Localstorage.getItem("short_cut", false)) {
-                set_pre_short_cut(Localstorage.getItem("short_cut", false))
+            if (keys != Localstorage.getItem("short_cut")) {
+                set_pre_short_cut(Localstorage.getItem("short_cut")!)
                 set_short_cut(keys)
                 inputRef.current?.blur()
             }
         }
         if (e.shiftKey && e.key != "Shift") {
             const keys = "Shift" + '+' + e.key
-            if (keys != Localstorage.getItem("short_cut", false)) {
-                set_pre_short_cut(Localstorage.getItem("short_cut", false))
+            if (keys != Localstorage.getItem("short_cut")) {
+                set_pre_short_cut(Localstorage.getItem("short_cut")!)
                 set_short_cut(keys)
                 inputRef.current?.blur()
             }

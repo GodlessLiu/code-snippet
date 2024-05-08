@@ -74,15 +74,15 @@ export const Setting_wrapper: FC<PropsWithChildren> = ({ children }) => {
         name: "右上",
         value: "tr"
     })
-    const [theme, set_theme] = useState<string>(Localstorage.getItem("theme", false) || 'conan')
+    const [theme, set_theme] = useState<string>(Localstorage.getItem("theme") || 'conan')
     const change_local_language = (lang_name: string) => {
         const i = language_locals.find(i => i.name === lang_name)
         set_lang(i || { name: "English", value: "en" })
         i18n.changeLanguage(i?.value || "en")
-        Localstorage.setItem("language", JSON.stringify(lang_name || "English"))
+        Localstorage.setItem("language", lang_name || "English")
     }
     const change_font = (font: string) => {
-        Localstorage.setItem('setting_font', JSON.stringify(font))
+        Localstorage.setItem('setting_font', font)
         setFont({
             name: font,
             value: font_familys.find(i => i.name === font)?.value || "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
@@ -91,11 +91,11 @@ export const Setting_wrapper: FC<PropsWithChildren> = ({ children }) => {
     const change_local_position = (position_value: string) => {
         const i = position_locals.find(i => i.value === position_value)
         set_position(i || { name: "右上", value: "tr" })
-        Localstorage.setItem("position", JSON.stringify(position_value || "tr"))
+        Localstorage.setItem("position", position_value || "tr")
     }
     const change_theme = (theme: string) => {
         set_theme(theme)
-        Localstorage.setItem("theme", JSON.stringify(theme))
+        Localstorage.setItem("theme", theme)
     }
 
     return <SettingContext.Provider value={{ font_family: font, change_font: change_font, font_familys: font_familys }}>

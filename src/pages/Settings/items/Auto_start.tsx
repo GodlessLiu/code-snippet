@@ -7,7 +7,7 @@ import { useAutoStart } from "@/hooks/use_auto_start"
 
 export const Auto_start = () => {
     const { t } = useTranslation()
-    const [auto_start, set_auto_start] = useState<boolean>(LocalStorage.getItem("auto_start", false) === "true")
+    const [auto_start, set_auto_start] = useState<boolean>(LocalStorage.getItem("auto_start") === "true")
     useEffect(() => {
         LocalStorage.setItem("auto_start", auto_start.toString())
         useAutoStart()
