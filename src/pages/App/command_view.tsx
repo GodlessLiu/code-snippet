@@ -30,14 +30,12 @@ export function Command_view() {
     useEffect(() => {
         set_group(command_view_file);
     }, [])
-
     useEffect(() => {
-        search_input_focus();
-        appWindow.setFocus();
-        listen("handle_show", async (_) => {
-            search_input_focus();
+        listen("tauri://focus", (e) => {
+            if (e.windowLabel === 'main') search_input_focus();
         })
     }, [])
+
     useEffect(() => {
         data_snippets_path().then((path) => {
             watch(

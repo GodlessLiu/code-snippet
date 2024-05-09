@@ -14,7 +14,7 @@ const resources = {
             "export_message": "The exported data has been copied to the clipboard!!"
         },
         "setting": {
-            "font_family": "Systerm font_family",
+            "font_family": "Systerm font",
             "language": "Language",
             "theme": "Theme",
             "short_cut": "ShortClasut",

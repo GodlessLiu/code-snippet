@@ -68,12 +68,6 @@ fn main() {
                     } else {
                         window.show().unwrap();
                         window.set_focus().unwrap();
-                        let _ = window.emit(
-                            "handle_show",
-                            payload::Payload {
-                                msg: "handle show ".to_string(),
-                            },
-                        );
                     }
                 }
             }
