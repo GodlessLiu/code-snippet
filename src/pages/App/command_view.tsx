@@ -15,7 +15,7 @@ import { invoke } from "@tauri-apps/api";
 import { writeText } from "@tauri-apps/api/clipboard";
 
 export function Command_view() {
-    const { local, themes } = useContext(ThemeContext)
+    const { theme: local, themes } = useContext(ThemeContext)
     const { t } = useTranslation()
     const searh_input_ref = useRef<HTMLInputElement>(null);
     const [group, set_group] = useState<Command_view_file[]>([]);

@@ -5,17 +5,16 @@ import { t } from "i18next"
 import { useContext } from "react"
 
 export const Language = () => {
-    const { local, locals, set_local } = useContext(LanguageContext)
-
+    const { language: local, languages: locals, set_language: set_local } = useContext(LanguageContext)
     return <Setting_item title={t("setting.language") + ":"}>
-        <Select defaultValue={local.name} onValueChange={(e: string) => set_local(e)}>
+        <Select defaultValue={local} onValueChange={(e: string) => set_local(e)}>
             <SelectTrigger className="w-[90px]">
-                <SelectValue placeholder={local.name} />
+                <SelectValue />
             </SelectTrigger>
             <SelectContent>
                 {
                     locals?.map(local => {
-                        return <SelectItem key={local.value} value={local.name}>{local.name}</SelectItem>
+                        return <SelectItem key={local.value} value={local.value}>{local.name}</SelectItem>
                     })
                 }
             </SelectContent>

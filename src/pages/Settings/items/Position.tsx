@@ -5,17 +5,17 @@ import { useContext } from "react"
 import { useTranslation } from "react-i18next"
 
 export const Position = () => {
-    const { local, set_local, locals } = useContext(PositionContext)
+    const { position, set_position, positions } = useContext(PositionContext)
     const { t } = useTranslation()
     return <Setting_item title={t("setting.position")}>
-        <Select defaultValue={local.value} onValueChange={(e: string) => set_local(e)}>
+        <Select defaultValue={position} onValueChange={set_position}>
             <SelectTrigger className="w-[90px]">
-                <SelectValue placeholder={local.name} />
+                <SelectValue />
             </SelectTrigger>
             <SelectContent>
                 {
-                    locals?.map(local => {
-                        return <SelectItem key={local.value} value={local.value}>{local.name}</SelectItem>
+                    positions?.map(p => {
+                        return <SelectItem key={p.value} value={p.value}>{p.name}</SelectItem>
                     })
                 }
             </SelectContent>

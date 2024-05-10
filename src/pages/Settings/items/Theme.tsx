@@ -5,12 +5,12 @@ import { useContext } from "react";
 import { useTranslation } from "react-i18next";
 
 export const Theme = () => {
-    const { set_theme, themes, local } = useContext(ThemeContext)
+    const { set_theme, themes, theme } = useContext(ThemeContext)
     const { t } = useTranslation()
     return <Setting_item title={t('setting.theme') + ":"}>
-        <Select defaultValue={local} onValueChange={(e: string) => set_theme(e)}>
+        <Select defaultValue={theme} onValueChange={set_theme}>
             <SelectTrigger className="w-[90px]">
-                <SelectValue placeholder={t(themes[local].name)} />
+                <SelectValue />
             </SelectTrigger>
             <SelectContent>
                 {

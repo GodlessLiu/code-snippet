@@ -1,23 +1,21 @@
-import { SettingContext } from "@/pages/Settings/contexts/Setting_context"
+import { FontContext } from "@/pages/Settings/contexts/Font_context"
 import { Setting_item } from "@/pages/Settings/components/Setting_item"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { useContext } from "react"
-import { t } from "i18next"
+import { useTranslation } from "react-i18next"
 
 export const Font_family = () => {
-    const { font_familys, font_family, change_font } = useContext(SettingContext)
-    const handle_value_change = (e: string) => {
-        change_font(e)
-    }
+    const { fonts, set_font, local_font } = useContext(FontContext)
+    const { t } = useTranslation();
     return <Setting_item title={t("setting.font_family") + ':'}>
-        <Select defaultValue={font_family.name} onValueChange={(e: string) => handle_value_change(e)}>
+        <Select defaultValue={local_font} onValueChange={set_font}>
             <SelectTrigger className="w-[98px]">
-                <SelectValue placeholder={font_family.name} />
+                <SelectValue />
             </SelectTrigger>
             <SelectContent>
                 {
-                    font_familys?.map(font => {
-                        return <SelectItem key={font.name} value={font.name}>{font.name}</SelectItem>
+                    fonts?.map(font => {
+                        return <SelectItem key={font.value} value={font.value}>{font.name}</SelectItem>
                     })
                 }
             </SelectContent>
