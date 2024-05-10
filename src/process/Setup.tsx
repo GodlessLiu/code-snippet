@@ -7,7 +7,6 @@ import { FC, PropsWithChildren, useEffect, useState } from "react";
 import Localstorage from "@/lib/localstorage";
 import { useAutoStart } from "@/hooks/use_auto_start";
 import { use_window_position } from "@/hooks/use_state_window";
-
 export const Setup: FC<PropsWithChildren> = ({ children }) => {
     const [loading, set_loading] = useState(true);
     const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
@@ -47,7 +46,7 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
             appWindow.show()
         }
     })
-    // 保持窗口在右上方
+    // 保持窗口位置
     use_window_position();
     return <Setting_wrapper>
         {loading ? <p className="rounded-lg border shadow-md bg-white indent-2 py-1">loading...</p> : children}

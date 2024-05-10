@@ -77,6 +77,9 @@ dependencies:
   tauri-plugin-autostart-api:
     specifier: github:tauri-apps/tauri-plugin-autostart#v1
     version: github.com/tauri-apps/tauri-plugin-autostart/a8455f120ad801d828f91528f1b4ca47d00c8ba3
+  tauri-plugin-clipboard-api:
+    specifier: ^0.6.9
+    version: 0.6.9
   tauri-plugin-fs-watch-api:
     specifier: github:tauri-apps/tauri-plugin-fs-watch#v1
     version: github.com/tauri-apps/tauri-plugin-fs-watch/1b5db098baee370c039ed12c8c43b0ab03314e03
@@ -3402,6 +3405,14 @@ packages:
     transitivePeerDependencies:
       - ts-node
 
+  /tauri-plugin-clipboard-api@0.6.9:
+    resolution: {integrity: sha512-sfAVC15TENLOhklAlFXJd0IBI887H6ifTpAoGwTqq/+s+iWswKsY5YaIdsbheWiw9SPBObqiKPDUmbo9LooyIA==}
+    dependencies:
+      '@tauri-apps/api': 1.5.3
+      tslib: 2.6.2
+      zod: 3.23.8
+    dev: false
+
   /thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
     engines: {node: '>=0.8'}
@@ -3631,6 +3642,10 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod@3.23.8:
+    resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
+    dev: false
 
   /zustand@4.5.2(@types/react@18.2.67)(react@18.2.0):
     resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}

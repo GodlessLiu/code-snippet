@@ -1,6 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 extern crate winapi;
+use tauri_plugin_autostart::MacosLauncher;
 use winapi::um::winuser::{keybd_event, KEYEVENTF_KEYUP, VK_CONTROL};
 
 mod payload;
@@ -9,7 +10,6 @@ use tauri::{
     api::path::{resolve_path, BaseDirectory},
     CustomMenuItem, Env, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
 };
-use tauri_plugin_autostart::MacosLauncher;
 
 fn get_snippet_data_path() -> PathBuf {
     let context: tauri::Context<tauri::utils::assets::EmbeddedAssets> =

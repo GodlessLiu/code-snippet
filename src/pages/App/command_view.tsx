@@ -6,13 +6,13 @@ import { appWindow } from "@tauri-apps/api/window";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
 import { useRef, useCallback, useEffect, useState, useContext } from "react";
 import { watch } from 'tauri-plugin-fs-watch-api';
-import { invoke } from "@tauri-apps/api";
-import { writeText } from "@tauri-apps/api/clipboard";
 import { read_data_file_to_view_file } from "@/hooks/use_view_file";
 import { data_snippets_path } from "@/lib/path";
 import { TitleBar } from "@/components/TitleBar";
 import { useTranslation } from "react-i18next";
 import { ThemeContext } from "@/pages/Settings/contexts/theme_context";
+import { invoke } from "@tauri-apps/api";
+import { writeText } from "@tauri-apps/api/clipboard";
 
 export function Command_view() {
     const { local, themes } = useContext(ThemeContext)
@@ -24,7 +24,6 @@ export function Command_view() {
         if (searh_input_ref.current) {
             searh_input_ref.current.focus();
             console.log('focus');
-
         }
     }, [])
     const command_view_file = use_code_snippets_store((state) => state.command_view_file);
@@ -33,6 +32,7 @@ export function Command_view() {
         set_group(command_view_file);
     }, [])
     useEffect(() => {
+        // TODO: fix多次触发
         listen("tauri://focus", (e) => {
             if (e.windowLabel === 'main') {
                 console.log(e);
@@ -42,7 +42,6 @@ export function Command_view() {
             };
         })
     }, [])
-
     useEffect(() => {
         data_snippets_path().then((path) => {
             watch(
