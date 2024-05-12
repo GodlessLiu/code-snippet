@@ -6,7 +6,7 @@ import { message } from '@tauri-apps/api/dialog';
 import { PhDownloadSimpleFill } from "@/components/icons/download";
 import { MaterialSymbolsIosShareSharp } from "@/components/icons/share";
 import { WebviewWindow, getAll } from "@tauri-apps/api/window";
-import { data_snippets_path } from "@/lib/path";
+import { data_snippets_path } from "@/lib/file";
 import { MaterialSymbolsSettingsOutline } from "@/components/icons/setting";
 import { useNavigate } from "react-router-dom";
 import { t } from "i18next";

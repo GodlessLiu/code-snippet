@@ -7,7 +7,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { useRef, useCallback, useEffect, useState, useContext } from "react";
 import { watch } from 'tauri-plugin-fs-watch-api';
 import { read_data_file_to_view_file } from "@/hooks/use_view_file";
-import { data_snippets_path } from "@/lib/path";
+import { data_snippets_path } from "@/lib/file";
 import { TitleBar } from "@/components/TitleBar";
 import { useTranslation } from "react-i18next";
 import { ThemeContext } from "@/pages/Settings/contexts/theme_context";

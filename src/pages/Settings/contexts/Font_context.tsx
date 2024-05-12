@@ -1,6 +1,6 @@
 import { constants } from "@/constant"
-import { Localstorage } from "@/lib/localstorage"
-import { FC, PropsWithChildren, createContext, useState } from "react"
+import { FC, PropsWithChildren, createContext } from "react"
+import { useLocalStorage } from 'react-use'
 export interface Font_family {
     name: string
     value: string
@@ -33,10 +33,7 @@ export const Font_wrapper: FC<PropsWithChildren> = ({ children }) => {
             value: "ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace"
         }
     ]
-    const [font, setFont] = useState<string>(Localstorage.getItemWithDefault('font', constants.default_font))
+    const [font, set_font] = useLocalStorage<string>("font", constants.default_font, { raw: true })
 
-    const change_font = (font_name: string) => {
-        Localstorage.runFnWithLocalStorage('font', font_name, () => setFont(font_name))
-    }
-    return <FontContext.Provider value={{ fonts, local_font: font, set_font: change_font }}>{children}</FontContext.Provider>
+    return <FontContext.Provider value={{ fonts, local_font: font!, set_font }}>{children}</FontContext.Provider>
 }

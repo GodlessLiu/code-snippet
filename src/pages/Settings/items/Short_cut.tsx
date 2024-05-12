@@ -1,22 +1,19 @@
 import { Setting_item } from "@/pages/Settings/components/Setting_item";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Localstorage } from '@/lib/localstorage';
 import { constants } from "@/constant";
+import { useLocalStorage } from "react-use";
 
 export const Short_cut = () => {
     const { t } = useTranslation()
     const inputRef = useRef<HTMLInputElement>(null)
     const [border_color, set_border_color] = useState('black')
     function save_short_cut(keys: string) {
-        if (keys != Localstorage.getItem("short_cut")) {
-            Localstorage.runFnWithLocalStorage("short_cut", keys, () => {
-                set_short_cut(keys)
-                inputRef.current?.blur()
-            })
-        }
+        set_short_cut(keys)
+        inputRef.current?.blur()
     }
-    const [short_cut, set_short_cut] = useState<string>(Localstorage.getItemWithDefault("short_cut", constants.default_short_cut));
+
+    const [short_cut, set_short_cut] = useLocalStorage<string>("short_cut", constants.default_short_cut, { raw: true })
     const handle_input = useCallback((e: KeyboardEvent) => {
         e.preventDefault()
         if (e.ctrlKey && e.key != "Control") {

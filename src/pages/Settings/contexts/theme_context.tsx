@@ -1,7 +1,7 @@
 import { constants } from "@/constant"
-import { Localstorage } from "@/lib/localstorage"
-import { FC, PropsWithChildren, createContext, useState } from "react"
+import { FC, PropsWithChildren, createContext } from "react"
 import { useTranslation } from "react-i18next"
+import { useLocalStorage } from "react-use"
 
 
 export interface ThemeAsset {
@@ -66,11 +66,8 @@ export const Theme_wrapper: FC<PropsWithChildren> = ({ children }) => {
             command_item_label: "linear-gradient(white, transparent)"
         }
     };
-    const [theme, set_theme] = useState<string>(Localstorage.getItemWithDefault('theme', constants.default_theme))
-    const change_theme = (theme: string) => {
-        Localstorage.runFnWithLocalStorage('theme', theme, () => set_theme(theme))
-    }
-    return <ThemeContext.Provider value={{ themes: themes, theme: theme, set_theme: change_theme }}>
+    const [theme, set_theme] = useLocalStorage<string>('theme', constants.default_theme, { raw: true })
+    return <ThemeContext.Provider value={{ themes: themes, theme: theme!, set_theme }}>
         {children}
     </ThemeContext.Provider>
 }

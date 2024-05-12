@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { Localstorage } from "@/lib/localstorage";
+import { getItemWithDefault } from "@/lib/localstorage";
 import { resources } from "@/locals/resources";
 import { constants } from "@/constant";
 export function init_i18n() {
@@ -22,7 +22,7 @@ export function init_i18n() {
                 }
             },
             // lng: locals.find(i => i.name === Localstorage.getItem("language") || "en")?.value, // if you're using a language detector, do not define the lng option
-            lng: Localstorage.getItemWithDefault("language", constants.default_lang),
+            lng: getItemWithDefault("language", constants.default_lang),
             fallbackLng: "en",
 
 

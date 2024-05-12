@@ -1,6 +1,6 @@
 import { BaseDirectory, FileEntry, createDir, exists, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
 import { default as matter } from 'gray-matter';
-
+import { appDataDir } from "@tauri-apps/api/path";
 export interface Command_view_file {
     is_dir: boolean,
     name: string,
@@ -92,8 +92,6 @@ export function write_snippet_file(sub_path: string, content: string): Promise<v
     })
 }
 
-
-
 export function import_snippets_from_json(_value: any) {
     _value.forEach(async (element: Command_view_file) => {
         if (element.is_dir) {
@@ -112,4 +110,15 @@ export function import_snippets_from_json(_value: any) {
         await write_snippet_file(element.name, element.rawContent!)
         return
     });
+}
+
+
+export function data_snippets_path(): Promise<string> {
+    return new Promise((resolve, reject) => {
+        appDataDir().then((dir) => {
+            resolve(dir + 'snippets');
+        }).catch(e => {
+            reject(e)
+        })
+    })
 }

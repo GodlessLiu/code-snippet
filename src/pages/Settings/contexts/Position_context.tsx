@@ -1,7 +1,7 @@
 import { constants } from "@/constant"
-import { Localstorage } from "@/lib/localstorage"
-import { FC, PropsWithChildren, createContext, useState } from "react"
+import { FC, PropsWithChildren, createContext } from "react"
 import { useTranslation } from "react-i18next"
+import { useLocalStorage } from "react-use"
 
 export type Local_position = {
     name: string,
@@ -37,13 +37,11 @@ export const Position_wrapper: FC<PropsWithChildren> = ({ children }) => {
             value: 'bl'
         }
     ]
-    const [position, set_position] = useState<string>(Localstorage.getItemWithDefault('position', constants.default_position))
-    function change_position(position: string) {
-        Localstorage.runFnWithLocalStorage('position', position, () => set_position(position))
-    }
+    const [position, set_position] = useLocalStorage<string>('position', constants.default_position, { raw: true })
+
     return <PositionContext.Provider value={{
         positions: position_locals,
-        position: position,
-        set_position: change_position
+        position: position!,
+        set_position
     }}>{children}</PositionContext.Provider>
 }

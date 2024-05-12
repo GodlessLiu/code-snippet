@@ -4,7 +4,7 @@ import { use_code_snippets_store } from "@/stores/code_snippets";
 import { register } from "@tauri-apps/api/globalShortcut";
 import { appWindow } from "@tauri-apps/api/window";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import { Localstorage } from "@/lib/localstorage";
+import { getItemWithDefault } from "@/lib/localstorage";
 import { use_window_position } from "@/hooks/use_state_window";
 import { constants } from "@/constant";
 export const Setup: FC<PropsWithChildren> = ({ children }) => {
@@ -36,14 +36,16 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
         return () => document.removeEventListener('keydown', fn);
     }, [])
     // 注册快捷键
-    register(Localstorage.getItemWithDefault("short_cut", constants.default_short_cut), async () => {
-        const is_vissible = await appWindow.isVisible()
-        if (is_vissible) {
-            appWindow.hide()
-        } else {
-            appWindow.show()
-        }
-    })
+    useEffect(() => {
+        register(getItemWithDefault("short_cut", constants.default_short_cut), async () => {
+            const is_vissible = await appWindow.isVisible()
+            if (is_vissible) {
+                appWindow.hide()
+            } else {
+                appWindow.show()
+            }
+        })
+    }, [])
     // 保持窗口位置
     use_window_position();
     return <Setting_wrapper>
