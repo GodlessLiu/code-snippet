@@ -1,57 +1,35 @@
 import { Setting_item } from "@/pages/Settings/components/Setting_item";
-import { register, unregister } from "@tauri-apps/api/globalShortcut";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Localstorage from '@/lib/localstorage';
-import { appWindow } from "@tauri-apps/api/window";
+import { Localstorage } from '@/lib/localstorage';
+import { constants } from "@/constant";
 
 export const Short_cut = () => {
     const { t } = useTranslation()
     const inputRef = useRef<HTMLInputElement>(null)
     const [border_color, set_border_color] = useState('black')
-    const [short_cut, set_short_cut] = useState<string>(Localstorage.getItem("short_cut") || "Alt+l")
-    const [pre_short_cut, set_pre_short_cut] = useState<string>("")
-    useEffect(() => {
-        if (!short_cut) return;
-        if (pre_short_cut) {
-            unregister(pre_short_cut)
+    function save_short_cut(keys: string) {
+        if (keys != Localstorage.getItem("short_cut")) {
+            Localstorage.runFnWithLocalStorage("short_cut", keys, () => {
+                set_short_cut(keys)
+                inputRef.current?.blur()
+            })
         }
-        register(short_cut, async () => {
-            const is_vissible = await appWindow.isVisible()
-            if (is_vissible) {
-                appWindow.hide()
-            } else {
-                appWindow.show()
-            }
-        })
-        Localstorage.setItem("short_cut", short_cut)
-        return
-    }, [short_cut, pre_short_cut])
+    }
+    const [short_cut, set_short_cut] = useState<string>(Localstorage.getItemWithDefault("short_cut", constants.default_short_cut));
     const handle_input = useCallback((e: KeyboardEvent) => {
         e.preventDefault()
         if (e.ctrlKey && e.key != "Control") {
             const keys = "Control" + '+' + e.key
-            if (keys != Localstorage.getItem("short_cut")) {
-                set_pre_short_cut(Localstorage.getItem("short_cut")!)
-                set_short_cut(keys)
-                inputRef.current?.blur()
-            }
+            save_short_cut(keys)
         }
         if (e.altKey && e.key != "Alt") {
             const keys = "Alt" + '+' + e.key
-            if (keys != Localstorage.getItem("short_cut")) {
-                set_pre_short_cut(Localstorage.getItem("short_cut")!)
-                set_short_cut(keys)
-                inputRef.current?.blur()
-            }
+            save_short_cut(keys)
         }
         if (e.shiftKey && e.key != "Shift") {
             const keys = "Shift" + '+' + e.key
-            if (keys != Localstorage.getItem("short_cut")) {
-                set_pre_short_cut(Localstorage.getItem("short_cut")!)
-                set_short_cut(keys)
-                inputRef.current?.blur()
-            }
+            save_short_cut(keys)
         }
     }, [])
     function handle_focus() {

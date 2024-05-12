@@ -4,9 +4,9 @@ import { use_code_snippets_store } from "@/stores/code_snippets";
 import { register } from "@tauri-apps/api/globalShortcut";
 import { appWindow } from "@tauri-apps/api/window";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import Localstorage from "@/lib/localstorage";
-import { useAutoStart } from "@/hooks/use_auto_start";
+import { Localstorage } from "@/lib/localstorage";
 import { use_window_position } from "@/hooks/use_state_window";
+import { constants } from "@/constant";
 export const Setup: FC<PropsWithChildren> = ({ children }) => {
     const [loading, set_loading] = useState(true);
     const set_file_entries = use_code_snippets_store((state) => state.init_code_snippets_store);
@@ -17,8 +17,6 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
             set_loading(false);
         })
     }, [])
-    // 开机自启动
-    useAutoStart();
     // 阻止鼠标右键
     useEffect(() => {
         function fn(e: MouseEvent) {
@@ -38,7 +36,7 @@ export const Setup: FC<PropsWithChildren> = ({ children }) => {
         return () => document.removeEventListener('keydown', fn);
     }, [])
     // 注册快捷键
-    register(Localstorage.getItem("short_cut") || "Alt+l", async () => {
+    register(Localstorage.getItemWithDefault("short_cut", constants.default_short_cut), async () => {
         const is_vissible = await appWindow.isVisible()
         if (is_vissible) {
             appWindow.hide()

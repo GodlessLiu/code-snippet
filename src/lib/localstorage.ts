@@ -5,7 +5,15 @@ class LocalStorage {
     getItem(key: string) {
         return localStorage.getItem(key);
     }
+    getItemWithDefault(key: string, defaultValue: string) {
+        return localStorage.getItem(key) || defaultValue;
+    }
+    runFnWithLocalStorage(key: string, value: string, fn: (value: string) => void) {
+        fn(value)
+        this.setItem(key, value)
+    }
 }
 
 
-export default new LocalStorage();
+export const Localstorage = new LocalStorage();
+

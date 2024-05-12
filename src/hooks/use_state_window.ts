@@ -1,10 +1,10 @@
 import { PhysicalPosition, currentMonitor, getAll } from '@tauri-apps/api/window';
-import LocalStorage from '@/lib/localstorage';
+import { Localstorage } from '@/lib/localstorage';
 export function use_window_position() {
     let physicalPosition;
     currentMonitor().then((monitor) => {
         const windows = getAll();
-        switch (LocalStorage.getItem("position")) {
+        switch (Localstorage.getItem("position")) {
             case "tl":
                 physicalPosition = new PhysicalPosition(10, 10);
                 break;

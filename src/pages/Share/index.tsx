@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Command_view_file, create_snippet_dir, snippet_exist, write_snippet_file } from "@/lib/file";
+import { import_snippets_from_json } from "@/lib/file";
 import { JsonEditor } from "@/pages/Share/JsonEditor";
 import { Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -12,23 +12,7 @@ export function Share() {
         if (!value) return
         setLoading(true)
         const _value = JSON.parse(value)
-        _value.forEach(async (element: Command_view_file) => {
-            if (element.is_dir) {
-                if (!await snippet_exist(element.name)) {
-                    await create_snippet_dir(element.name)
-                }
-                element.children?.forEach(async (child: Command_view_file) => {
-                    if (await snippet_exist(element.name + '\\' + child.name)) return
-                    await write_snippet_file(element.name + '\\' + child.name, child.rawContent!)
-                })
-                return
-            }
-            if (await snippet_exist(element.name)) {
-                return
-            }
-            await write_snippet_file(element.name, element.rawContent!)
-            return
-        });
+        import_snippets_from_json(_value)
         setTimeout(() => {
             setLoading(false)
         }, 1000);

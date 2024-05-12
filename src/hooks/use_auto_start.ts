@@ -1,9 +1,8 @@
 import { enable, disable } from "tauri-plugin-autostart-api";
-import LocalStorage from "@/lib/localstorage";
-export async function useAutoStart() {
-    if (LocalStorage.getItem("auto_start") === "true") {
-        await enable();
+export async function useAutoStart(auto_start: boolean) {
+    if (!auto_start) {
+        await disable();
         return
     }
-    await disable();
+    await enable();
 }

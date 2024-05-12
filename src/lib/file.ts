@@ -91,3 +91,25 @@ export function write_snippet_file(sub_path: string, content: string): Promise<v
         })
     })
 }
+
+
+
+export function import_snippets_from_json(_value: any) {
+    _value.forEach(async (element: Command_view_file) => {
+        if (element.is_dir) {
+            if (!await snippet_exist(element.name)) {
+                await create_snippet_dir(element.name)
+            }
+            element.children?.forEach(async (child: Command_view_file) => {
+                if (await snippet_exist(element.name + '\\' + child.name)) return
+                await write_snippet_file(element.name + '\\' + child.name, child.rawContent!)
+            })
+            return
+        }
+        if (await snippet_exist(element.name)) {
+            return
+        }
+        await write_snippet_file(element.name, element.rawContent!)
+        return
+    });
+}
