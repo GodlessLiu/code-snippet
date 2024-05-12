@@ -23,7 +23,6 @@ export function Command_view() {
     const search_input_focus = useCallback(() => {
         if (searh_input_ref.current) {
             searh_input_ref.current.focus();
-            console.log('focus');
         }
     }, [])
     const command_view_file = use_code_snippets_store((state) => state.command_view_file);
@@ -35,8 +34,6 @@ export function Command_view() {
         // TODO: fix多次触发
         listen("tauri://focus", (e) => {
             if (e.windowLabel === 'main') {
-                console.log(e);
-
                 appWindow.setFocus();
                 search_input_focus();
             };

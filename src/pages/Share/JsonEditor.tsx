@@ -10,7 +10,6 @@ interface Props {
 
 export const JsonEditor: FC<Props> = ({ value, setValue }) => {
     const { themes, theme: local } = useContext(ThemeContext)
-
     return <AceEditor
         mode="json"
         theme="github"
