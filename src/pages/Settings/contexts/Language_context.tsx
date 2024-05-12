@@ -17,6 +17,9 @@ export const language_locals: Local_language[] = [{
 }, {
     name: "简体中文",
     value: 'zh-CN'
+}, {
+    name: "日本語",
+    value: 'jp'
 }]
 export const LanguageContext = createContext<Language_type>({
     languages: [],

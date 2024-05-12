@@ -24,6 +24,12 @@ export const resources = {
             "qiyuanzui": "Seven deadly sins",
             "lol": "League of Legends",
             "pure": "Pure color"
+        },
+        "position": {
+            "bottom_right": "Bottom right",
+            "top_left": "Top left",
+            "top_right": "Top right",
+            "bottom_left": "Bottom left"
         }
     },
     zh: {
@@ -51,6 +57,45 @@ export const resources = {
             "qiyuanzui": "七原罪",
             "lol": "英雄联盟",
             "pure": "纯色"
+        },
+        "position": {
+            "bottom_right": "右下",
+            "top_left": "左上",
+            "top_right": "右上",
+            "bottom_left": "左下"
+        }
+    },
+    jp: {
+        "home": {
+            "search_text": "検索するスニペット名を入力...",
+            "snippet_not_find": "スニペットが見つかりませんでした。"
+        },
+        "share": {
+            "import": "インポート",
+            "window_title": "共有",
+            "export_message": "エクスポートされたデータはクリップボードにコピーされました！"
+        },
+        "setting": {
+            "font_family": "システムフォント",
+            "language": "言語",
+            "theme": "テーマ",
+            "short_cut": "ショートカット",
+            "auto_start": "自動スタート",
+            "position": "位置",
+            "recommendation": "設定を変更後、アプリケーションを再起動する必要があります！！！"
+        },
+        "themes_name": {
+            "conan": "コナン",
+            "yuanshen": "原神",
+            "qiyuanzui": "七つの大罪",
+            "lol": "リーグ・オブ・レジェンド",
+            "pure": "単色"
+        },
+        "position": {
+            "bottom_right": "右下",
+            "top_left": "左上",
+            "top_right": "右上",
+            "bottom_left": "左下"
         }
     }
 }

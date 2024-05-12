@@ -16,6 +16,9 @@ export function init_i18n() {
                 },
                 "zh-CN": {
                     translation: resources.zh
+                },
+                "jp": {
+                    translation: resources.jp
                 }
             },
             // lng: locals.find(i => i.name === Localstorage.getItem("language") || "en")?.value, // if you're using a language detector, do not define the lng option
