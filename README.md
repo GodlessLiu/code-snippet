@@ -2,7 +2,7 @@
 面向开发人员，为了实现创建、组织和共享代码片段的功能，并且不依赖于用户自己使用的IDE
 >目前只支持windows
 ## 使用
-最新使用文档请前往 https://aifengliu.top/archives/kaiyuan_code-snippet
+最新使用文档请前往 https://aifengliu.top/posts/code-snippet
 
 ## 特性
 - 自定义代码片段
